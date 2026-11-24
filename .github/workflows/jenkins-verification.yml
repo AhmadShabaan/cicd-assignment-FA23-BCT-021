@@ -1,0 +1,22 @@
+name: Jenkins pipeline verification
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run three Jenkins Pipeline from SCM builds
+        run: bash .github/run-jenkins-verification.sh
+      - name: Collect Jenkins service log
+        if: always()
+        run: |
+          mkdir -p evidence
+          docker logs assignment-jenkins > evidence/jenkins-service.log 2>&1 || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jenkins-evidence
+          path: evidence/
