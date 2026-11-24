@@ -1,0 +1,24 @@
+name: Manual Docker Selenium run
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build nginx and Selenium images
+        run: |
+          docker build -t assignment-site .
+          docker build -t assignment-tests tests
+      - name: Start nginx and run Selenium in Docker
+        run: |
+          mkdir -p results
+          docker network create assignment-lab
+          docker run -d --name assignment-staging --network assignment-lab --network-alias site assignment-site
+          docker run --rm --network assignment-lab --mount "type=bind,source=$PWD/results,target=/results" assignment-tests
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: selenium-evidence
+          path: results/
