@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cloud Computing Lab | FA23-BCT-021</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #eef3f8; color: #142940; font: 17px/1.55 system-ui, sans-serif; }
+    main { max-width: 740px; margin: 8vh auto; padding: clamp(24px, 6vw, 58px); background: white; border-top: 6px solid #12635c; border-radius: 16px; box-shadow: 0 12px 40px #14294015; }
+    h1 { line-height: 1.1; margin: 8px 0 16px; font-size: clamp(30px, 6vw, 52px); }
+    .course { color: #12635c; font-weight: 700; }
+    form { margin-top: 24px; border-top: 1px solid #d9e4eb; padding-top: 24px; }
+    label { display: block; font-weight: 700; }
+    input, button { font: inherit; padding: 9px 14px; border-radius: 6px; margin-top: 8px; }
+    input { border: 1px solid #667b8e; width: min(100%, 300px); }
+    button { border: 1px solid #12635c; background: #12635c; color: white; cursor: pointer; }
+    output { display: block; color: #12635c; margin-top: 8px; overflow-wrap: anywhere; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="course">COMSATS University Islamabad · Cloud Computing</p>
+    <h1>Muhammad Ahmad Shabaan</h1>
+    <p>Roll number <strong>FA23-BCT-021</strong> · Lab Assignment 3</p>
+    <button id="show-message" type="button">Show message</button>
+    <output id="click-message" aria-live="polite"></output>
+    <form id="text-form">
+      <label for="entry">Enter a message</label>
+      <input id="entry" type="text" required>
+      <button type="submit">Submit</button>
+      <output id="submitted-text" aria-live="polite"></output>
+    </form>
+  </main>
+  <script>
+    document.querySelector('#show-message').addEventListener('click', () => {
+      document.querySelector('#click-message').textContent = 'The cloud lab page is running.';
+    });
+    document.querySelector('#text-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      document.querySelector('#submitted-text').textContent = document.querySelector('#entry').value;
+    });
+  </script>
+</body>
+</html>
